@@ -10,6 +10,7 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinTable;
@@ -22,7 +23,7 @@ import jakarta.persistence.JoinColumn;
 public class Progetto {
 	
 
-	private @Id @GeneratedValue Long id;
+	private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
 	
 	private String nome;
 	
@@ -43,12 +44,10 @@ public class Progetto {
 	
 	public Progetto() {}
 	
-	Progetto(String nome, String url, String descrizione, Img immagini) {
+	Progetto(String nome, String url, String descrizione) {
 		this.nome = nome;
 		this.url = url;
 		this.descrizione = descrizione;
-		addImg(immagini);
-//		addTecnologia(tecnologie);
 	}
 
 	public String getNome() {

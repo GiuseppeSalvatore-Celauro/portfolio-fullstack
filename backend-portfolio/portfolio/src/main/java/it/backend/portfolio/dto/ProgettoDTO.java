@@ -23,7 +23,7 @@ public class ProgettoDTO {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	public String setDescrizione() {
+	public String getDescrizione() {
 		return descrizione;
 	}
 	public void setDescrizione(String descrzione) {

@@ -1,5 +1,7 @@
 package it.backend.portfolio.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,6 +12,7 @@ import it.backend.portfolio.model.Progetto;
 import it.backend.portfolio.model.Tecnologia;
 import it.backend.portfolio.repository.ProgettiRepository;
 import it.backend.portfolio.repository.TecnologieRepository;
+import it.backend.portfolio.response.ProgettoResponse;
 
 @RestController
 public class ProgettoController {
@@ -23,24 +26,35 @@ public class ProgettoController {
 	}
 	
 	@PostMapping("/progetti")
-	public Progetto nuovoProgetto(@RequestBody ProgettoDTO body){
+	public ProgettoResponse nuovoProgetto(@RequestBody ProgettoDTO body){
+		
 		Progetto progetto = new Progetto();
 		
 		progetto.setNome(body.getNome());
 		progetto.setUrl(body.getUrl());
-		progetto.setDescrizione(body.setDescrizione());
+		progetto.setDescrizione(body.getDescrizione());
 		
-		for(String imgUrl: body.getImmagini()) {
-			Img img = new Img(imgUrl);
-			progetto.addImg(img);
+		if(body.getImmagini() != null) {
+			for(String imgUrl: body.getImmagini()) {
+				Img img = new Img(imgUrl);
+				progetto.addImg(img);
+			}
 		}
 		
-		for(String techName: body.getTecnologie()) {
-			Tecnologia tecnologia = techRepository.findByNome(techName);
-			if(tecnologia == null) tecnologia = new Tecnologia(techName);
-			progetto.addTecnologia(tecnologia);
+		if(body.getTecnologie() != null) {
+			for(String techName: body.getTecnologie()) {
+				Tecnologia tecnologia = techRepository.findByNome(techName);
+				
+				if(tecnologia == null) {
+					tecnologia = techRepository.save(new Tecnologia(techName));
+				}
+				
+				progetto.addTecnologia(tecnologia);
+			}
 		}
 		
-		return progettiRepository.save(progetto);
+		Progetto saved = progettiRepository.save(progetto);
+		
+		return new ProgettoResponse(saved);
 	}
 }
