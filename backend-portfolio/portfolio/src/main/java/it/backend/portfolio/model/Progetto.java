@@ -2,14 +2,20 @@ package it.backend.portfolio.model;
 
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Objects;
+import java.util.HashSet;
+import java.util.Set;
+
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Table;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
 
 @Entity
 @Table(name = "progetti")
@@ -24,17 +30,27 @@ public class Progetto {
 	
 	private String descrizione;
 	
-	@OneToMany(mappedBy = "progetto", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "progetto", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	private List<Img> immagini = new ArrayList<>();
 	
-	Progetto() {}
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+			name = "progetti_tecnologie",
+			joinColumns = @JoinColumn(name = "progetto_id"),
+			inverseJoinColumns = @JoinColumn(name = "tecnologia_id")
+			)
+	private Set<Tecnologia> tecnologie = new HashSet<>();
 	
-	Progetto(String nome, String url, String descrizione) {
+	public Progetto() {}
+	
+	Progetto(String nome, String url, String descrizione, Img immagini) {
 		this.nome = nome;
 		this.url = url;
 		this.descrizione = descrizione;
+		addImg(immagini);
+//		addTecnologia(tecnologie);
 	}
-	
+
 	public String getNome() {
 		return nome;
 	}
@@ -65,9 +81,18 @@ public class Progetto {
 		this.immagini = immagini;
 	}
 
+
+	public Set<Tecnologia> getTecnologie() {
+		return tecnologie;
+	}
+
+	public void setTecnologie(Set<Tecnologia> tecnologie) {
+		this.tecnologie = tecnologie;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.id, this.nome, this.descrizione, this.url);
+		return getClass().hashCode();
 	}
 
 	@Override
@@ -77,17 +102,33 @@ public class Progetto {
 		    if (!(o instanceof Progetto))
 		      return false;
 		    Progetto progetto = (Progetto) o;
-		    return Objects.equals(this.id, progetto.id) && Objects.equals(this.nome, progetto.nome)
-		        && Objects.equals(this.url, progetto.url) && Objects.equals(this.descrizione, progetto.descrizione);
+		    return id != null && id.equals(progetto.id);
 	}
 
 	@Override
 	public String toString() {
-
-		return "Progetto{" + "id=" + this.id +  ", nome='" + this.nome + '\'' + ", url='" + this.url + + '\'' + "', descrzione='" + this.descrizione+ '\'' + '}';
+		return "Progetto{" + "id=" + this.id +  ", nome='" + this.nome + '\'' + ", url='" + this.url + '\'' + "', descrzione='" + this.descrizione+ '\'' + '}';
 	}
 	
 	
+	public void addImg(Img img) {
+		immagini.add(img);
+		img.setProgetto(this);
+	}
 	
+	public void removeImg(Img img) {
+		immagini.remove(img);
+		img.setProgetto(null);
+	}
+	
+	public void addTecnologia(Tecnologia tecnologia) {
+		tecnologie.add(tecnologia);
+		tecnologia.getProgetti().add(this);
+	}
+	
+	public void removeTecnologia(Tecnologia tecnologia) {
+		tecnologie.remove(tecnologia);
+		tecnologia.getProgetti().remove(this);
+	}
 	
 }
