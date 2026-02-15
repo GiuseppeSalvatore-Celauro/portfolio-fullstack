@@ -1,7 +1,13 @@
 package it.backend.portfolio.controller;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +32,7 @@ public class ProgettoController {
 	}
 	
 	@PostMapping("/progetti")
-	public ProgettoResponse nuovoProgetto(@RequestBody ProgettoDTO body){
+	public ResponseEntity<ProgettoResponse> nuovoProgetto(@RequestBody ProgettoDTO body){
 		
 		Progetto progetto = new Progetto();
 		
@@ -55,6 +61,32 @@ public class ProgettoController {
 		
 		Progetto saved = progettiRepository.save(progetto);
 		
-		return new ProgettoResponse(saved);
+		return ResponseEntity.ok(new ProgettoResponse(saved));
+	}
+	
+	@GetMapping("/progetti")
+	public ResponseEntity<List<ProgettoResponse>> vediProgetti(){
+		List<Progetto> progetti =  progettiRepository.findAll();
+		List<ProgettoResponse> risposta = progetti.stream().map(ProgettoResponse::new).collect(Collectors.toList());
+		return ResponseEntity.ok(risposta);
+	}
+	
+	@GetMapping("/progetti/{id}")
+	public ResponseEntity<ProgettoResponse> vediProgetto(@PathVariable Long id){
+		if(!progettiRepository.existsById(id)) {
+			return ResponseEntity.notFound().build();
+		}
+		
+		Progetto progetto = progettiRepository.findById(id).get();
+		return ResponseEntity.ok(new ProgettoResponse(progetto));
+	}
+	
+	@DeleteMapping("/progetti/{id}")
+	public ResponseEntity<Void> eliminaProgetto(@PathVariable Long id){
+		if(!progettiRepository.existsById(id)) {
+			return ResponseEntity.notFound().build();
+		}
+		progettiRepository.deleteById(id);
+		return ResponseEntity.noContent().build();
 	}
 }
