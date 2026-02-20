@@ -2,7 +2,10 @@ package it.backend.portfolio.controller;
 
 import java.util.Map;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -29,17 +32,22 @@ public class AuthController {
 	}
 	
 	@PostMapping("/login")
-	public Map<String, String> login(@RequestBody LoginRequest request){
-		authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(
-						request.getUsername(),
-						request.getPassword()
-						)
-				);
-		UserDetails user = userDetailsService.loadUserByUsername(request.getUsername());
-		String token = jwtService.generateToken(user);
-		
-		return Map.of("token", token);
+	public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+	    try {
+	        authenticationManager.authenticate(
+	                new UsernamePasswordAuthenticationToken(
+	                        request.getUsername(),
+	                        request.getPassword()
+	                )
+	        );
+	    } catch (BadCredentialsException e) {
+	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+	                             .body(Map.of("error", "Username o password errati"));
+	    }
+
+	    UserDetails user = userDetailsService.loadUserByUsername(request.getUsername());
+	    String token = jwtService.generateToken(user);
+
+	    return ResponseEntity.ok(Map.of("token", token));
 	}
-	
 }
