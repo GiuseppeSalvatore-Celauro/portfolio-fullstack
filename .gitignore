@@ -1,0 +1,80 @@
+# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
+
+# Compiled output
+/frontend-portfolio/dist
+/frontend-portfolio/tmp
+/frontend-portfolio/out-tsc
+/frontend-portfolio/bazel-out
+
+# Node
+/frontend-portfolio/node_modules
+/frontend-portfolio/npm-debug.log
+/frontend-portfolio/yarn-error.log
+
+# IDEs and editors
+/frontend-portfolio/.idea/
+/frontend-portfolio/.project
+/frontend-portfolio/.classpath
+/frontend-portfolio/.c9/
+/frontend-portfolio/*.launch
+/frontend-portfolio/.settings/
+/frontend-portfolio/*.sublime-workspace
+
+# Visual Studio Code
+/frontend-portfolio/.vscode/*
+/frontend-portfolio/!.vscode/settings.json
+/frontend-portfolio/!.vscode/tasks.json
+/frontend-portfolio/!.vscode/launch.json
+/frontend-portfolio/!.vscode/extensions.json
+/frontend-portfolio/!.vscode/mcp.json
+/frontend-portfolio/.history/*
+
+# Miscellaneous
+/frontend-portfolio/.angular/cache
+/frontend-portfolio/.sass-cache/
+/frontend-portfolio/connect.lock
+/frontend-portfolio/coverage
+/frontend-portfolio/libpeerconnection.log
+/frontend-portfolio/testem.log
+/frontend-portfolio/typings
+/frontend-portfolio/__screenshots__/
+
+# System files
+/frontend-portfolio/.DS_Store
+/frontend-portfolio/Thumbs.db
+
+
+/backend-portfolio/portfolio/HELP.md
+/backend-portfolio/portfolio/target/
+/backend-portfolio/portfolio/.mvn/wrapper/maven-wrapper.jar
+/backend-portfolio/portfolio/!**/src/main/**/target/
+/backend-portfolio/portfolio/!**/src/test/**/target/
+
+### STS ###
+/backend-portfolio/portfolio/.apt_generated
+/backend-portfolio/portfolio/.factorypath
+/backend-portfolio/portfolio/.project
+/backend-portfolio/portfolio/.settings
+/backend-portfolio/portfolio/.springBeans
+/backend-portfolio/portfolio/.sts4-cache
+
+### IntelliJ IDEA ###
+/backend-portfolio/portfolio/.classpath
+/backend-portfolio/portfolio/.idea
+/backend-portfolio/portfolio/*.iws
+/backend-portfolio/portfolio/*.iml
+/backend-portfolio/portfolio/*.ipr
+
+### NetBeans ###
+/backend-portfolio/portfolio/.classpath
+/backend-portfolio/portfolio/nbproject/private/
+/backend-portfolio/portfolio/nbbuild/
+/backend-portfolio/portfolio/dist/
+/backend-portfolio/portfolio/nbdist/
+/backend-portfolio/portfolio/.nb-gradle/
+/backend-portfolio/portfolio/build/
+/backend-portfolio/portfolio/!**/src/main/**/build/
+/backend-portfolio/portfolio/!**/src/test/**/build/
+
+### VS Code ###
+/backend-portfolio/portfolio/.vscode/

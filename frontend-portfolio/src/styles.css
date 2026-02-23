@@ -1,0 +1,27 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "tailwindcss";
+
+@import "tailwindcss";
+
+html{
+    scroll-behavior: smooth;
+}
+
+:root{
+    --bg-color: #041526;
+    --color-1: #080F2F;
+    --color-2: #1E3A8A;
+    --color-3: #E0F7FA;
+    --text-default-color: #FFFFFF;
+    background-color: var(--bg-color);
+    color: var(--text-default-color);
+    --swiper-navigation-color: var(--color-indigo-500);
+    --swiper-navigation-sides-offset: -10px;
+    --swiper-pagination-color: var(--color-indigo-500);
+    --swiper-pagination-bottom: -4px;
+}
+
+.Typewriter{
+    display: inline;
+}
