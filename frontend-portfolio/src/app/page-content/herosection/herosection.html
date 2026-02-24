@@ -1,15 +1,20 @@
- <section id="hero" className="w-full h-screen flex justify-center items-center">
-    <div className="grid grid-cols-1 xl:grid-cols-2 xl:gap-10 xl:mx-98 ">
-        <div className="hidden xl:flex ">
-            <img src="" alt="Foto profilo di Salvatore" className="rounded-full shadow-lg shadow-indigo-500 hover:shadow-2xl hover:scale-105 transition-all duration-500" />
+ <section class="w-full h-screen flex justify-center items-center">
+    <div class="grid grid-cols-1 xl:grid-cols-2 xl:gap-10 xl:mx-98 ">
+        <div class="hidden xl:flex ">
+            <img src="./assets/hero-section-img.jpeg" alt="Foto profilo di Salvatore" class="rounded-full shadow-lg shadow-indigo-500 hover:shadow-2xl hover:scale-105 transition-all duration-500" />
         </div>
-        <div className="flex justify-center xl:items-start item-center flex-col font-bold ">
-            <h1 className="text-5xl xl:text-left text-center leading-tight mb-2">Ciao, sono 
-                <span className="text-indigo-400 ms-2 decoration-indigo-400 underline">Salvatore</span>
+        <div class="flex justify-center xl:items-start item-center flex-col font-bold ">
+            <h1 class="text-5xl xl:text-left text-center leading-tight mb-2">Ciao, sono 
+                <span class="text-indigo-400 ms-2 decoration-indigo-400 underline">Salvatore</span>
             </h1>
-            <span className="text-[var(--color-3)] xl:text-left text-center text-lg ms-1">
-                Sono appassionato di 'tecnologia', 'sviluppo web', 'problem solving'
-                <span className="block">
+            <span class="text-[var(--color-3)] xl:text-left text-center text-lg ms-1">
+                <span>
+                    Sono appassionato di
+                    <om-typewriter styleClass="inline underline text-indigo-400"
+                    [words]="['Sviluppo Web', 'Problem Solving', 'Ingegneria del software']"
+                    ></om-typewriter>
+                </span>
+                <span class="block">
                     il mio ruolo è trasformare le vostre idee in 
                     <p>siti funzionali ed eleganti.</p>
                 </span>
