@@ -15,6 +15,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.JoinColumn;
 
@@ -41,6 +42,10 @@ public class Progetto {
 			inverseJoinColumns = @JoinColumn(name = "tecnologia_id")
 			)
 	private Set<Tecnologia> tecnologie = new HashSet<>();
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "categoria_id", nullable = false)
+	private Categoria categoria;
 	
 	public Progetto() {}
 	
@@ -87,6 +92,14 @@ public class Progetto {
 
 	public void setTecnologie(Set<Tecnologia> tecnologie) {
 		this.tecnologie = tecnologie;
+	}
+
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
 	}
 
 	@Override

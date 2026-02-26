@@ -16,7 +16,7 @@ public class ProgettoResponse {
 	private String descrizione;
 	private List<String> immagini;
 	private Set<String> tecnologie;
-	
+	private String categoria;
 	public ProgettoResponse(Progetto progetto) {
 		this.id = progetto.getId();
 		this.nome = progetto.getNome();
@@ -30,6 +30,8 @@ public class ProgettoResponse {
 						.stream()
 						.map(Tecnologia::getNome)
 						.collect(Collectors.toSet());
+		this.categoria = progetto.getCategoria().getCategoria();
+						 
 	}
 	
 	
@@ -39,4 +41,5 @@ public class ProgettoResponse {
 	public String getDescrizione() {return descrizione;}
 	public List<String> getImmagini() {return immagini;}
 	public Set<String> getTecnologie() {return tecnologie;}
+	public String getCategoria() {return categoria;}
 }

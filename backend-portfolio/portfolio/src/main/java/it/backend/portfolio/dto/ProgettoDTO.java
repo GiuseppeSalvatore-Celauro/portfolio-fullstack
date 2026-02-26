@@ -10,6 +10,7 @@ public class ProgettoDTO {
 	private String descrizione;
 	private List<String> immagini;
 	private Set<String> tecnologie;
+	private String categoria;
 	
 	public String getNome() {
 		return nome;
@@ -41,6 +42,13 @@ public class ProgettoDTO {
 	public void setTecnologie(Set<String> tecnologie) {
 		this.tecnologie = tecnologie;
 	}
+	public String getCategoria() {
+		return categoria;
+	}
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
+	}
+	
 	
 	
 }

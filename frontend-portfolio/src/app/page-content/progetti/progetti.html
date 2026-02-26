@@ -1,31 +1,47 @@
 <section class="h-screen flex justify-center items-center">
     <div class="shadow-2xl shadow-indigo-500 mx-10 md:mx-0 w-3/4 rounded-md">
-        <div class="border-b border-indigo-400 h-fit justify-start p-5 row-end-1 hidden sm:flex">
-            <button class="text-indigo-500 font-semibold hover:underline"> categorie varie </button>
-        </div>
-        <div class="top-0 h-100 flex gap-5 p-10 overflow-hidden">
-                <div class=" rounded-md shadow-sm shadow-indigo-500 hover:shadow-md hover:scale-101 transition-all duration-300">
-                <img
-                    src=""
-                    alt="Project Thumbnail"
-                    class="w-full h-40 object-cover aspect-3/2 rounded-t-md"
-                />
-                <div class="p-4">
-                    <h3 class="text-lg font-bold line-clamp-1">titolo</h3>
-                    <p class="text-sm text-gray-600 mb-3 line-clamp-1 xl:line-clamp-2">
-                        descrizione
-                    </p>
-                    <div class="flex gap-3">
-                    <a
-                        href=""
-                        target='_blank'
-                        class="text-indigo-500 font-semibold hover:underline"
-                    >
-                        Codice
-                    </a>
+        @if(error == true) {
+            <div class="bg-red-500 text-white p-4 rounded-md">
+                Errore nel caricamento dei progetti
+            </div>
+        }@else{
+            <div class="border-b gap-5 border-indigo-400 h-fit justify-start p-5 row-end-1 hidden sm:flex">
+                @for (categorie of categories; track $index) {
+                    <button  class="font-semibold hover:underline"> {{ categorie.categoria }} </button>
+                }
+            </div>
+            <div class="top-0 h-100 flex gap-5 p-10 overflow-hidden">
+                @for(progetto of projects; track $index) {
+                    <div class=" rounded-md shadow-sm shadow-indigo-500 hover:shadow-md hover:scale-101 transition-all duration-300">
+                    <img
+                        src="{{progetto.immagini[0]}}"
+                        alt="Project Thumbnail"
+                        class="w-full h-40 object-cover aspect-3/2 rounded-t-md"
+                    />
+                    <div class="p-4">
+                        @for(tecnolgie of progetto.tecnologie; track $index) {
+                            <span class="text-xs bg-indigo-100 text-indigo-500 px-2 py-1 rounded-full mr-2 mb-2 inline-block">
+                                {{ tecnolgie }}
+                            </span>
+                        }
+                        <h3 class="text-lg font-bold line-clamp-1">{{ progetto.nome }}</h3>
+                        <p class="text-sm text-gray-600 mb-3 line-clamp-1 xl:line-clamp-2">
+                            {{ progetto.descrizione }}
+                        </p>
+                        <div class="flex gap-3">
+                        <a
+                            href="{{ progetto.url }}"
+                            target='_blank'
+                            class="text-indigo-500 font-semibold hover:underline"
+                        >
+                            Visualizza codice
+                        </a>
+                        </div>
                     </div>
-                </div>
-            </div> 
-        </div>
+                </div> 
+                }
+            </div>
+        }
+        
     </div>
 </section>

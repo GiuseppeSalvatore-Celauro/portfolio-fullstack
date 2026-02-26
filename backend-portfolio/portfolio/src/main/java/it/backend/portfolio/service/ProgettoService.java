@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 
 import it.backend.portfolio.dto.ProgettoDTO;
 import it.backend.portfolio.exception.ResourceNotFoundException;
+import it.backend.portfolio.model.Categoria;
 import it.backend.portfolio.model.Img;
 import it.backend.portfolio.model.Progetto;
 import it.backend.portfolio.model.Tecnologia;
+import it.backend.portfolio.repository.CategoriaRepository;
 import it.backend.portfolio.repository.ProgettiRepository;
 import it.backend.portfolio.repository.TecnologieRepository;
 import jakarta.transaction.Transactional;
@@ -21,10 +23,11 @@ public class ProgettoService {
 
 	private final ProgettiRepository progettiRepository;
 	private final TecnologieRepository techRepository;
-	
-	public ProgettoService(ProgettiRepository repository, TecnologieRepository techRepository) {
+	private final CategoriaRepository catRepository;
+	public ProgettoService(ProgettiRepository repository, TecnologieRepository techRepository, CategoriaRepository catRepository) {
 		this.progettiRepository = repository;
 		this.techRepository = techRepository;
+		this.catRepository = catRepository;
 	}
 	
 	public Progetto save(ProgettoDTO body) {
@@ -53,6 +56,13 @@ public class ProgettoService {
 			}
 		}
 		
+		if(body.getCategoria() != null) {
+			Categoria categoria = catRepository.findByCategoria(body.getCategoria());
+			if(categoria == null) {
+				throw new RuntimeException("Categoria non trovata");
+			}
+			progetto.setCategoria(categoria);
+		}
 		Progetto saved = progettiRepository.save(progetto);
 		
 		return saved;
@@ -112,6 +122,14 @@ public class ProgettoService {
 				
 				progetto.addTecnologia(tecnologia);
 			}
+		}
+		
+		if(body.getCategoria() != null) {
+		    Categoria categoria = catRepository.findByCategoria(body.getCategoria());
+		    if(categoria == null) {
+		    	throw new RuntimeException("Categoria non trovata");
+		    }
+		    progetto.setCategoria(categoria);
 		}
 
 		Progetto saved = progettiRepository.save(progetto);

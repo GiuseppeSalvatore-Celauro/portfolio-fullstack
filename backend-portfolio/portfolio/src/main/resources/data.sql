@@ -1,0 +1,18 @@
+INSERT INTO categorie (categoria) VALUES ('FrontEnd');
+INSERT INTO categorie (categoria) VALUES ('BackEnd');
+INSERT INTO categorie (categoria) VALUES ('FullStack');
+INSERT INTO categorie (categoria) VALUES ('Game');
+INSERT INTO categorie (categoria) VALUES ('App');
+INSERT INTO tecnologie (nome) VALUES ('Java');
+INSERT INTO tecnologie (nome) VALUES ('Spring Boot');
+INSERT INTO tecnologie (nome) VALUES ('React');
+INSERT INTO tecnologie (nome) VALUES ('Angular');
+INSERT INTO tecnologie (nome) VALUES ('PHP');
+INSERT INTO tecnologie (nome) VALUES ('Laravel');
+INSERT INTO tecnologie (nome) VALUES ('GdScript');
+INSERT INTO tecnologie (nome) VALUES ('Python');
+INSERT INTO tecnologie (nome) VALUES ('HTML');
+INSERT INTO tecnologie (nome) VALUES ('CSS');
+INSERT INTO tecnologie (nome) VALUES ('JS');
+INSERT INTO tecnologie (nome) VALUES ('Tailwindcss');
+INSERT INTO tecnologie (nome) VALUES ('Bootstrap');
