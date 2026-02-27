@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Auth } from '../../services/auth';
 
 @Component({
   selector: 'app-login',
@@ -12,6 +13,7 @@ export class Login implements OnInit {
   loginForm!: FormGroup;
   submitted = false;
   loginError = '';
+  private authService = inject(Auth);
 
   constructor(private fb: FormBuilder, private router: Router) {}
 
@@ -32,26 +34,18 @@ export class Login implements OnInit {
 
     const { username, password } = this.loginForm.value;
 
-    fetch('http://localhost:8080/api/auth/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
+    this.authService.login(username, password).subscribe({
+      next: (response) => {
+        localStorage.setItem('token', response.token);
+        localStorage.setItem('username', response.username);
+        localStorage.setItem('role', response.role);
+        localStorage.setItem('expiration date', response.exp);
+        this.router.navigate(['/']);
       },
-      body: JSON.stringify({ username, password })
-    })
-    .then((response: any) => {
-      if (!response.ok) {
-        throw new Error('Login failed');
+      error: (err) => {
+        console.error('Login failed', err);
+        this.loginError = 'Invalid username or password';
       }
-      return response.json();
-    })
-    .then((data: any) => {
-      localStorage.setItem('token', data.token);
-      this.router.navigate(['/']);
-    })
-    .catch((error: any) => {
-      console.log('Login error:', error);
-      
     });
   }
 }
