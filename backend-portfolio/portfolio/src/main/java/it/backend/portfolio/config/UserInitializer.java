@@ -28,6 +28,7 @@ public class UserInitializer {
 			newUser.setUsername("user83729");
 			newUser.setEmail("admin@prova.it");
 			newUser.setPassword(passwordEncoder.encode("12345678"));
+			newUser.setRole("ROLE_ADMIN");
 			
 			userRepository.save(newUser);
 		}

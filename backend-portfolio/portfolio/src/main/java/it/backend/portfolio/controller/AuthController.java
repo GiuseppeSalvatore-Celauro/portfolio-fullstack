@@ -1,5 +1,6 @@
 package it.backend.portfolio.controller;
 
+import java.util.Date;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
@@ -7,6 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,7 +51,20 @@ public class AuthController {
 
 	    UserDetails user = userDetailsService.loadUserByUsername(request.getUsername());
 	    String token = jwtService.generateToken(user);
-
-	    return ResponseEntity.ok(Map.of("token", token));
+	    String username = user.getUsername();
+	    Date exp = jwtService.getExpiration(token);
+	    String role = user.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .filter(r -> r.equals("ROLE_ADMIN")) // filtra solo ROLE_ADMIN
+                .findFirst()
+                .orElse("ROLE_USER"); // null se l'utente non è admin
+	    Map<String, Object> tokenMap = Map.of(
+	    		"token", token, 
+	    		"username", username,
+	    		"exp", exp,
+	    		"role", role
+	    		);
+	    
+	    return ResponseEntity.ok(tokenMap);
 	}
 }

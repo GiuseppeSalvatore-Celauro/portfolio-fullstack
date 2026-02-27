@@ -8,6 +8,7 @@ import javax.crypto.SecretKey;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
@@ -51,6 +52,16 @@ public class JwtService {
 							.getExpiration();
 		
 		return expiration.before(new Date());
+	}
+	
+	public Date getExpiration(String token) {
+		Claims claims = Jwts.parser()
+				.verifyWith(key)
+				.build()
+				.parseSignedClaims(token)
+				.getPayload();
+
+		return claims.getExpiration();
 	}
 	
 }
